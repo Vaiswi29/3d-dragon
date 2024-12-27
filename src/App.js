@@ -28,36 +28,36 @@ function App() {
     // Set up the renderer
     const renderer = new THREE.WebGLRenderer();
     renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setClearColor(0xd3d3d3); // Set background to light grey
+    renderer.setClearColor(0xf8f0e3); // Light cream background
     mountRef.current.appendChild(renderer.domElement);
 
-    // Add lighting (colored for gothic feel)
-    const ambientLight = new THREE.AmbientLight(0x5c4a72, 1.5); // Purple ambient light
+    // Add lighting (soft and warm feel)
+    const ambientLight = new THREE.AmbientLight(0xf0e1d6, 1.5); // Soft warm ambient light
     scene.add(ambientLight);
 
-    const redLight = new THREE.PointLight(0xff0040, 2, 50); // Red point light
-    redLight.position.set(-5, 5, 5);
-    scene.add(redLight);
+    const pinkLight = new THREE.PointLight(0xffa0b0, 2, 50); // Soft pink point light
+    pinkLight.position.set(-5, 5, 5);
+    scene.add(pinkLight);
 
-    const blueLight = new THREE.PointLight(0x0040ff, 2, 50); // Blue point light
-    blueLight.position.set(5, -5, 5);
-    scene.add(blueLight);
+    const softGreenLight = new THREE.PointLight(0xa8f0a1, 2, 50); // Soft green light
+    softGreenLight.position.set(5, -5, 5);
+    scene.add(softGreenLight);
 
     // Load the .glb model
     const loader = new GLTFLoader();
     loader.load(
-      'models/gojo.glb',
+      'models/dragon.glb',
       (gltf) => {
         const model = gltf.scene;
-
+    
         // Fix orientation and scale
         model.rotation.y = Math.PI; // Rotate to face forward
-        model.scale.set(3, 3, 3); // Increase size
+        model.scale.set(0.5, 0.5, 0.5); // Reduced scale
         model.position.set(0, -1.5, 0); // Center the model
-
+    
         scene.add(model);
         modelRef.current = model; // Reference the model
-
+    
         console.log('Model loaded:', model); // Log model loading
       },
       undefined,
@@ -65,6 +65,7 @@ function App() {
         console.error('An error occurred loading the model:', error);
       }
     );
+    
 
     // Handle mouse movement to rotate the model
     const handleMouseMove = (event) => {
@@ -113,7 +114,7 @@ function App() {
       const response = await axios.post(
         'https://api.openrouter.ai/v1/completions',
         {
-          prompt: "Generate a motivational quote in Gojo's style.",
+          prompt: "Generate a motivational quote that is sweet and kind, suitable for Ellen.",
           max_tokens: 50,
           temperature: 0.7,
           n: 1,
@@ -130,7 +131,7 @@ function App() {
       setQuote(response.data.choices[0].text.trim());
     } catch (error) {
       console.error('Error fetching quote:', error);
-      setQuote("Keep pushing forward, like Gojo would!");
+      setQuote("You are stronger than you think, Ellen. Keep shining!");
     }
   };
 
@@ -149,7 +150,7 @@ function App() {
       style={{
         width: '100%',
         height: '100vh',
-        background: '#59606b',
+        background: '#f8f0e3', // Soft background color
         position: 'relative',
       }}
     >
@@ -161,7 +162,7 @@ function App() {
           left: '0',
           width: '100%',
           padding: '10px 20px',
-          background: '#1a1a1a',
+          background: '#f9c9b6', // Soft peach
           color: '#fff',
           fontFamily: 'Cursive',
           display: 'flex',
@@ -178,7 +179,7 @@ function App() {
             letterSpacing: '1px',
           }}
         >
-          Yena's Personal Motivator
+          A Sweet Dragon for Ellen
         </div>
       </nav>
 
@@ -192,7 +193,7 @@ function App() {
           color: '#fff',
           fontSize: '1.5rem',
           fontFamily: 'Cursive',
-          textShadow: '0 0 10px #ff0040, 0 0 20px #0040ff',
+          textShadow: '0 0 10px #ff80bf, 0 0 20px #99ffcc',
           zIndex: 5,
           textAlign: 'center',
           padding: '10px',
